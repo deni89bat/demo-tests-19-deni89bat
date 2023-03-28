@@ -12,7 +12,6 @@ public class AutomationPracticeForm extends ConfigDemoQa {
     @Test
     void fillAndCheckAutoPracticeForm() {
         open("/automation-practice-form");
-
         $("#firstName").setValue("Bruce");
         $("#lastName").setValue("Wayne");
         $("#userEmail").setValue("nobodyKnows@whoIm.com");
@@ -33,6 +32,7 @@ public class AutomationPracticeForm extends ConfigDemoQa {
         $("#city").click();
         $(byText("Delhi")).click();
         $("#submit").click();
+        //проверка формы
         $(".table").shouldHave(text("Bruce Wayne"));
         $(".table").shouldHave(text("nobodyKnows@whoIm.com"));
         $(".table").shouldHave(text("Male"));
