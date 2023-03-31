@@ -2,8 +2,6 @@ package com.demoqa;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -28,16 +26,23 @@ public class AutomationPracticeForm extends TestBase {
         $(byText("Sports")).click();
         $(byText("Reading")).click();
         $(byText("Music")).click();
-        $("#uploadPicture").uploadFile(new File("src/test/resources/01.jpg"));
+        $("#uploadPicture").uploadFromClasspath("01.jpg");
         $("#currentAddress").setValue("Gotham");
         $("#state").click();
         $(byText("NCR")).click();
         $("#city").click();
         $(byText("Delhi")).click();
         $("#submit").click();
-        $(".table").shouldHave(text("Bruce Wayne"), text("nobodyKnows@whoIm.com"), text("Male"),
-                text("1234567890"), text("01 January,1999"), text("Maths"), text("Sports, Reading, Music"),
-                text("01.jpg"), text("Gotham"), text("NCR Delhi"));
+        $(".table").shouldHave(text("Bruce Wayne"),
+                text("nobodyKnows@whoIm.com"),
+                text("Male"),
+                text("1234567890"),
+                text("01 January,1999"),
+                text("Maths"),
+                text("Sports, Reading, Music"),
+                text("01.jpg"),
+                text("Gotham"),
+                text("NCR Delhi"));
 
     }
 }
