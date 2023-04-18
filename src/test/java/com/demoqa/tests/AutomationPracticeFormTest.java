@@ -1,4 +1,4 @@
-package com.demoqa;
+package com.demoqa.tests;
 
 import org.junit.jupiter.api.Test;
 
@@ -7,7 +7,7 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static org.openqa.selenium.Keys.CONTROL;
 
-public class AutomationPracticeForm extends TestBase {
+public class AutomationPracticeFormTest extends TestBase {
     @Test
     void fillAndCheckAutoPracticeForm() {
         open("/automation-practice-form");
@@ -26,7 +26,7 @@ public class AutomationPracticeForm extends TestBase {
         $(byText("Sports")).click();
         $(byText("Reading")).click();
         $(byText("Music")).click();
-        $("#uploadPicture").uploadFromClasspath("01.jpg");
+        $("#uploadPicture").uploadFromClasspath("img/01.jpg");
         $("#currentAddress").setValue("Gotham");
         $("#state").click();
         $(byText("NCR")).click();
