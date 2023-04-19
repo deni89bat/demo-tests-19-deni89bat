@@ -11,6 +11,7 @@ public class AutomationPracticeFormWithPageObjectsTest extends TestBase {
     @Test
     void successfulRegistrationTest() {
         registrationPage.openPage()
+                .removeFooter()
                 .setFirstNameInput("Bruce")
                 .setLastNameInput("Wayne")
                 .setUserEmail("nobodyKnows@whoIm.com")
@@ -18,7 +19,7 @@ public class AutomationPracticeFormWithPageObjectsTest extends TestBase {
                 .setUserPhoneNumber("1234567890")
                 .setBirthDate("6", "June", "2000")
                 .setSubject("Arts")
-                .setHobbies(true, false, true)
+                .setHobbies("Sports", null , "Music")
                 .setAndUploadPicture("img/01.jpg")
                 .setCurrentAddress("Gotham")
                 .setStateCityInput("NCR")

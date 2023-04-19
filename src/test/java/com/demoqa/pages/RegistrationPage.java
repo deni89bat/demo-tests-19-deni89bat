@@ -3,6 +3,8 @@ package com.demoqa.pages;
 import com.codeborne.selenide.SelenideElement;
 import com.demoqa.pages.components.CalendarComponent;
 
+import java.util.Objects;
+
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -14,7 +16,7 @@ public class RegistrationPage {
     SelenideElement formHeaderText = $(".practice-form-wrapper"),
             firstNameInput = $("#firstName"),
             lastNameInput = $("#lastName"),
-            UserEmailInput = $("#userEmail"),
+            userEmailInput = $("#userEmail"),
             gender = $("#genterWrapper"),
             dateOfBirthInput = $("#dateOfBirthInput"),
             userPhoneNumber = $("#userNumber"),
@@ -29,13 +31,18 @@ public class RegistrationPage {
 
     //Actions
     public RegistrationPage openPage() {
-
         open("/automation-practice-form");
-        executeJavaScript("$('#fixedban').remove()");
-        executeJavaScript("$('footer').remove()");
         formHeaderText.shouldHave(text("Student Registration Form"));
         return this;
     }
+
+    public RegistrationPage removeFooter() {
+        executeJavaScript("$('footer').remove()");
+        executeJavaScript("$('#fixedban').remove()");
+
+        return this;
+    }
+
 
     public RegistrationPage setFirstNameInput(String value) {
         firstNameInput.setValue(value);
@@ -48,7 +55,7 @@ public class RegistrationPage {
     }
 
     public RegistrationPage setUserEmail(String value) {
-        UserEmailInput.setValue(value);
+        userEmailInput.setValue(value);
         return this;
     }
 
@@ -73,14 +80,14 @@ public class RegistrationPage {
         return this;
     }
 
-    public RegistrationPage setHobbies(boolean sports, boolean reading, boolean music) {
-        if (sports) {
+    public RegistrationPage setHobbies(String hobbie1, String hobbie2, String hobbie3) {
+        if (Objects.equals(hobbie1, "Sports")) {
             hobbiesInput.$(byText("Sports")).click();
         }
-        if (reading) {
+        if (Objects.equals(hobbie2, "Reading")) {
             hobbiesInput.$(byText("Reading")).click();
         }
-        if (music) {
+        if (Objects.equals(hobbie3, "Music")) {
             hobbiesInput.$(byText("Music")).click();
         }
         return this;
