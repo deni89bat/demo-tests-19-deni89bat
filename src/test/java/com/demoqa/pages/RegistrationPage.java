@@ -3,8 +3,6 @@ package com.demoqa.pages;
 import com.codeborne.selenide.SelenideElement;
 import com.demoqa.pages.components.CalendarComponent;
 
-import java.util.Objects;
-
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -21,7 +19,7 @@ public class RegistrationPage {
             dateOfBirthInput = $("#dateOfBirthInput"),
             userPhoneNumber = $("#userNumber"),
             subjectInput = $("#subjectsInput"),
-            hobbiesInput = $("#hobbiesWrapper"),
+            hobbieInput = $("#hobbiesWrapper"),
             picture = $("#uploadPicture"),
             currentAddress = $("#currentAddress"),
             stateCityInput = $("#stateCity-wrapper"),
@@ -80,16 +78,8 @@ public class RegistrationPage {
         return this;
     }
 
-    public RegistrationPage setHobbies(String hobbie1, String hobbie2, String hobbie3) {
-        if (Objects.equals(hobbie1, "Sports")) {
-            hobbiesInput.$(byText("Sports")).click();
-        }
-        if (Objects.equals(hobbie2, "Reading")) {
-            hobbiesInput.$(byText("Reading")).click();
-        }
-        if (Objects.equals(hobbie3, "Music")) {
-            hobbiesInput.$(byText("Music")).click();
-        }
+    public RegistrationPage setHobbie(String hobbie) {
+        hobbieInput.$(byText(hobbie)).click();
         return this;
     }
 
