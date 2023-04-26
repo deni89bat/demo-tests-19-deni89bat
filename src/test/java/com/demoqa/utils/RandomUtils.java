@@ -7,9 +7,9 @@ import java.util.Locale;
 
 // Class for fake data generating
 public class RandomUtils {
-    private static final Faker faker = new Faker(new Locale("en"));
+    private final Faker faker = new Faker(new Locale("en"));
 
-    static String[]
+    String[]
             gender = {"Male", "Female", "Other"},
             month = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November"},
             subject = {"Hindi", "English", "Maths", "Physics", "Chemistry", "Biology", "Computer Science", "Commerce", "Accounting", "Economics", "Arts", "Social Studies", "History", "Civics"},
@@ -22,59 +22,59 @@ public class RandomUtils {
             cityOfRajasthan = {"Jaipur", "Jaiselmer"};
 
 
-    static public String generateFirstName() {
+    public String generateFirstName() {
         return faker.name().firstName();
     }
 
-    static public String generateLastName() {
+    public String generateLastName() {
         return faker.name().lastName();
     }
 
-    static public String generateEmail() {
+    public String generateEmail() {
         return faker.internet().emailAddress();
     }
 
-    static public String generateGender() {
+    public String generateGender() {
         return faker.options().option(gender);
     }
 
-    static public String generatePhoneNumber() {
+    public String generatePhoneNumber() {
         return faker.number().digits(10);
     }
 
-    static public String generateDay() {
+    public String generateDay() {
         return String.valueOf(faker.number().numberBetween(1, 31));
     }
 
-    static public String generateMonth() {
+    public String generateMonth() {
         return faker.options().option(month);
     }
 
-    static public String generateYear() {
+    public String generateYear() {
         return String.valueOf(faker.number().numberBetween(1907, 2015));
     }
 
-    static public String generateSubject() {
+    public String generateSubject() {
         return faker.options().option(subject);
     }
 
-    static public String generateHobbie() {
+    public String generateHobbie() {
         return faker.options().option(hobbie);
     }
 
-    static public String generatePicture() {
+    public String generatePicture() {
         return faker.options().option(picture);
     }
 
-    static public String generateCurrentAddress() {
+    public String generateCurrentAddress() {
         return faker.address().fullAddress();
     }
 
-    static public String generateState() {
+    public String generateState() {
         return faker.options().option(state);
     }
 
-    public static String generateCity(String state) {
+    public String generateCity(String state) {
         switch (state) {
             case "NCR": {
                 return faker.options().option(cityOfNCR);

@@ -2,31 +2,31 @@ package com.demoqa.tests;
 
 import com.demoqa.pages.RegistrationModal;
 import com.demoqa.pages.RegistrationPage;
+import com.demoqa.utils.RandomUtils;
 import org.junit.jupiter.api.Test;
-
-import static com.demoqa.utils.RandomUtils.*;
 
 public class AutomationPracticeFormWithPageObjectsTestRandomData extends TestBase {
     RegistrationPage registrationPage = new RegistrationPage();
     RegistrationModal registrationModal = new RegistrationModal();
+    RandomUtils randomUtils = new RandomUtils();
+    String  firstName = randomUtils.generateFirstName(),
+            lastName = randomUtils.generateLastName(),
+            userEmail = randomUtils.generateEmail(),
+            gender = randomUtils.generateGender(),
+            phoneNumber = randomUtils.generatePhoneNumber(),
+            dayOfBirthDate = randomUtils.generateDay(),
+            monthOfBirthDate = randomUtils.generateMonth(),
+            yearOfBirthDate = randomUtils.generateYear(),
+            subject = randomUtils.generateSubject(),
+            hobbie = randomUtils.generateHobbie(),
+            picture = randomUtils.generatePicture(),
+            currentAddress = randomUtils.generateCurrentAddress(),
+            stateSelect = randomUtils.generateState(),
+            city = randomUtils.generateCity(stateSelect);
 
     @Test
     void successfulRegistrationTest() {
 
-        String firstName = generateFirstName(),
-                lastName = generateLastName(),
-                userEmail = generateEmail(),
-                gender = generateGender(),
-                phoneNumber = generatePhoneNumber(),
-                dayOfBirthDate = generateDay(),
-                monthOfBirthDate = generateMonth(),
-                yearOfBirthDate = generateYear(),
-                subject = generateSubject(),
-                hobbie = generateHobbie(),
-                picture = generatePicture(),
-                currentAddress = generateCurrentAddress(),
-                stateSelect = generateState(),
-                city = generateCity(stateSelect);
 
         registrationPage.openPage()
                 .removeFooter()
@@ -56,4 +56,5 @@ public class AutomationPracticeFormWithPageObjectsTestRandomData extends TestBas
                 .verifyResult("Address", currentAddress)
                 .verifyResult("State and City", stateSelect + " " + city);
     }
+
 }
