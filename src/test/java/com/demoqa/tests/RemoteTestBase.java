@@ -16,8 +16,8 @@ public class RemoteTestBase {
 
     @BeforeAll
     static void configForDemoQa() {
-        Configuration.browser = System.getProperty("browser" ,"chrome");
-        Configuration.baseUrl = System.getProperty("baseUrl" ,"https://demoqa.com");
+        Configuration.browser = System.getProperty("browser", "chrome");
+        Configuration.baseUrl = System.getProperty("baseUrl", "https://demoqa.com");
         Configuration.browserSize = System.getProperty("browserSize", "1920x1080");
         Configuration.browserVersion = System.getProperty("browserVersion", "100.0");
         Configuration.browserPosition = "0x0";
