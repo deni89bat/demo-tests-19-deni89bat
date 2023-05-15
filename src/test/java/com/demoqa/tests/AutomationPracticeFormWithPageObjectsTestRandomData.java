@@ -3,9 +3,13 @@ package com.demoqa.tests;
 import com.demoqa.pages.RegistrationModal;
 import com.demoqa.pages.RegistrationPage;
 import com.demoqa.utils.RandomUtils;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-public class AutomationPracticeFormWithPageObjectsTestRandomData extends TestBase {
+import static io.qameta.allure.Allure.step;
+
+public class AutomationPracticeFormWithPageObjectsTestRandomData extends RemoteTestBase {
     RegistrationPage registrationPage = new RegistrationPage();
     RegistrationModal registrationModal = new RegistrationModal();
     RandomUtils randomUtils = new RandomUtils();
@@ -25,36 +29,48 @@ public class AutomationPracticeFormWithPageObjectsTestRandomData extends TestBas
             city = randomUtils.generateCity(stateSelect);
 
     @Test
+    @Tag("remote")
+    @DisplayName("Successful registration")
     void successfulRegistrationTest() {
 
 
-        registrationPage.openPage()
-                .removeFooter()
-                .setFirstNameInput(firstName)
-                .setLastNameInput(lastName)
-                .setUserEmail(userEmail)
-                .setGender(gender)
-                .setUserPhoneNumber(phoneNumber)
-                .setBirthDate(dayOfBirthDate, monthOfBirthDate, yearOfBirthDate)
-                .setSubject(subject)
-                .setHobbie(hobbie)
-                .setAndUploadPicture(picture)
-                .setCurrentAddress(currentAddress)
-                .setStateCityInput(stateSelect)
-                .setCity(city)
-                .pushSubmitButton();
+       step("Открытие формы", ()-> {
+           registrationPage.openPage()
+                   .removeFooter();
+       } );
 
-        registrationModal.verifyModalAppears()
-                .verifyResult("Student Name", firstName + " " + lastName)
-                .verifyResult("Student Email", userEmail)
-                .verifyResult("Gender", gender)
-                .verifyResult("Mobile", phoneNumber)
-                .verifyResult("Date of Birth", dayOfBirthDate + " " + monthOfBirthDate + "," + yearOfBirthDate)
-                .verifyResult("Subjects", subject)
-                .verifyResult("Hobbies", hobbie)
-                .verifyResult("Picture", picture.substring(4))
-                .verifyResult("Address", currentAddress)
-                .verifyResult("State and City", stateSelect + " " + city);
+
+        step("Заполнение формы", ()-> {
+            registrationPage.setFirstNameInput(firstName)
+                    .setLastNameInput(lastName)
+                    .setUserEmail(userEmail)
+                    .setGender(gender)
+                    .setUserPhoneNumber(phoneNumber)
+                    .setBirthDate(dayOfBirthDate, monthOfBirthDate, yearOfBirthDate)
+                    .setSubject(subject)
+                    .setHobbie(hobbie)
+                    .setAndUploadPicture(picture)
+                    .setCurrentAddress(currentAddress)
+                    .setStateCityInput(stateSelect)
+                    .setCity(city)
+                    .pushSubmitButton();
+        } );
+
+        step("Проверка формы", ()-> {
+            registrationModal.verifyModalAppears()
+                    .verifyResult("Student Name", firstName + " " + lastName)
+                    .verifyResult("Student Email", userEmail)
+                    .verifyResult("Gender", gender)
+                    .verifyResult("Mobile", phoneNumber)
+                    .verifyResult("Date of Birth", dayOfBirthDate + " " + monthOfBirthDate + "," + yearOfBirthDate)
+                    .verifyResult("Subjects", subject)
+                    .verifyResult("Hobbies", hobbie)
+                    .verifyResult("Picture", picture.substring(4))
+                    .verifyResult("Address", currentAddress)
+                    .verifyResult("State and City", stateSelect + " " + city);
+        } );
+
+
     }
 
 }
