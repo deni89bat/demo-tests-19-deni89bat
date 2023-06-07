@@ -1,0 +1,77 @@
+Создание бота
+Находим бота в Telgram @BotFather (с галочкой)
+Отправляем команду команду /newbot
+Задаем имя
+Задаем никнейм (никнейм обязательно должен заканчиваться словом bot)
+Вместе с этим придет уникальный токен, который следует сохранить, и ссылка на работу с Bot API.
+
+Как узнать Chat ID
+Надо добавить бота в целевой чат сделать его администратором
+Перейти по ссылке https://api.telegram.org/bot{secret_bot}/getUpdates (вместо {secret_bot} токен бота)
+В результате мы увидим само сообщение, всю информацию о сообщении, ID отправителя и ID чата, который нам нужен.
+Теперь можем отправить сообщение от бота через терминал в чат командой
+curl -X POST \
+     -H 'Content-Type: application/json' \
+     -d '{"chat_id": "-1001920342457", "text": "This is a test from curl", "disable_notification": true}' \
+     https://api.telegram.org/bot{secret_bot}/sendMessage
+
+
+Как отправить аллюр отчет локально
+Создадим в проекте отдельную папку notifications
+Переходим по ссылке https://github.com/qa-guru/allure-notifications и скачиваем последнюю версию библиотеки и добавим jar-файл в проект в папку notifications.
+В папке notifications создаем файл конфигурации config.json. (этот файл не добавляем в гит)
+Результаты прогонов тестов копируем в корень проекта
+cp -r /var/folders/j0/dhs8gbc157sbc6jv11hxxhq40000gn/T/17690602661332270748/allure-report/* ./allure-report
+(после -r путь до папки, которая генерируется таской allureServe)
+После в созданный файл вставим и заполним следующую конструкцию
+{
+  "base": {
+    "logo": "",
+    "project": "QA.GURU",
+    "environment": "prod",
+    "comment": "any comment here",
+    "reportLink": "https://jenkins.autotests.cloud/",
+    "language": "ru",
+    "allureFolder": "allure-report/", //путь до папки с результатми прогона тестов
+    "enableChart": true //чтобы была видна диаграмма
+  },
+  "telegram": {
+    "token": "token",
+    "chat": "chat_id",
+    "replyTo": ""
+  }
+}
+После заполнения json-файла надо перейти в терминал и выполнить следующую команду:
+java "-DconfigFile=notifications/config.json" -jar notifications/allure-notifications-4.2.1.jar
+После выполнения команды бот пришлет в чат сообщения с результатами тестов.
+
+Как подключить все к Jenkins
+В  Jenkins в блоке "Сборка" необходимо выбрать Добавить шаг, в нем пункт Create/Update Text File (перед Invoke Gradle script)
+В File Path указываем путь к json-файлу notifications/config.json,
+в Text File Content вставляем содержимое файла config.json. Ставим галочки на Create at Workspace и Overwrite file.
+Перед этим в json-файл надо добавить внутренние переменные Jenkins. Итоговый обновленный файл будет выглядеть так:
+{
+  "base": {
+    "logo": "",
+    "project": "${JOB_BASE_NAME}",
+    "environment": "qa.guru",
+    "comment": "any comment here @deni89bat",
+    "reportLink": "${BUILD_URL}",
+    "language": "ru",
+    "allureFolder": "allure-report/",
+    "enableChart": true
+  },
+  "telegram": {
+    "token": "token",
+    "chat": "chat_id",
+    "replyTo": ""
+  }
+}
+Далее в блоке "Послесборочные операции" жмем Добавить шаг после сборки и выбираем Post build task.
+В поле Script указываем команду для отправки сообщения и сохраняем.
+java "-DconfigFile=notifications/config.json" -jar ../allure-notifications-4.2.1.jar
+
+Как добавить расписание джобы
+Тригеры сборки
+Запускать периодически
+Расписание - софрмировать значение https://crontab.guru/
